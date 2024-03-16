@@ -3,16 +3,22 @@ import {ethers} from "ethers"
 import StakeComponent from "./StakeComponent";
 import UnstakeComponent from "./UnstakeComponent";
 import useGetStakeBalance from "../hooks/useGetStakeBalance";
+import useGetUserClaimableReward from "../hooks/useGetUserClaimableReward";
 import ClaimRewardComponent from "./ClaimRewardComponent";
 
 
 
 const PoolsComponent = ({ pool, poolId }) => {
     const stakeBalance= useGetStakeBalance(poolId)
+    const claimableBalance= useGetUserClaimableReward(poolId)
+
     return (
         <Card size="2" style={{ width: 300 }}>
             <Flex gap="" align="center">
                 <Box width={"100%"}>
+                    <Text as="div" color="gray">
+                        Pool ID: {poolId}
+                    </Text>
                     <Text as="div" color="gray">
                         totalStakers: {parseInt(pool[0])}
                     </Text>
@@ -25,10 +31,17 @@ const PoolsComponent = ({ pool, poolId }) => {
                     <Text as="div" color="gray">
                         rewardRate: {parseInt(pool[3])}
                     </Text>
-                    {stakeBalance? <ClaimRewardComponent poolId={poolId} /> : <StakeComponent poolId={poolId}/>}
+                    <StakeComponent poolId={poolId}/>
                     <UnstakeComponent poolId={poolId} />
-                    {stakeBalance? <div className="mt-3">
-                        Balance: {parseInt(ethers.formatUnits(stakeBalance, 18))} RTK
+                    {stakeBalance? 
+                    <div className="mt-3">
+                        <div>
+                            Stake Balance: {parseInt(ethers.formatUnits(stakeBalance, 18))} RTK
+                        </div>
+                        <div>
+                            Claimable Balance: {parseInt(ethers.formatUnits(claimableBalance, 18))} RTK 
+                        </div>
+                        <ClaimRewardComponent poolId={poolId} />
                     </div>: ""
                     }
                 </Box>

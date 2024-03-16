@@ -8,7 +8,7 @@ const ClaimRewardComponent = ({poolId}) => {
     return (
         <Dialog.Root>
             <Dialog.Trigger>
-                <Button className="text-white bg-green-600 py-1 px-4 rounded-md mt-5 mr-5">Claim Reward</Button>
+                <Button className="text-white bg-green-600 py-1 px-4 rounded-md mt-1 mr-5">Claim Reward</Button>
             </Dialog.Trigger>
 
             <Dialog.Content style={{ maxWidth: 450 }}>
