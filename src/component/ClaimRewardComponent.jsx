@@ -1,21 +1,20 @@
 import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
-import useUnstake from "../hooks/useUnstake";
+import useClaimReward from "../hooks/useClaimReward";
 
-const UnstakeComponent = ({poolId}) => {
-
-    const handleUnstaking = useUnstake(parseInt(poolId));
+const ClaimRewardComponent = ({poolId}) => {
+    const handleClaimReward = useClaimReward(parseInt(poolId));
 
     return (
         <Dialog.Root>
             <Dialog.Trigger>
-                <Button className="text-white bg-blue-600 py-1 px-4 rounded-md mt-5 mr-5">Unstake</Button>
+                <Button className="text-white bg-green-600 py-1 px-4 rounded-md mt-5 mr-5">Claim Reward</Button>
             </Dialog.Trigger>
 
             <Dialog.Content style={{ maxWidth: 450 }}>
                 <Dialog.Title>Stake STK</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
-                    Are you sure you want to unstake STK
+                    Are you sure you want to claim Reward STK
                 </Dialog.Description>
 
                 <Flex gap="3" mt="4" justify="end">
@@ -26,9 +25,9 @@ const UnstakeComponent = ({poolId}) => {
                     </Dialog.Close>
                     <Button
                         className="bg-blue-600"
-                        onClick={handleUnstaking}
+                        onClick={handleClaimReward}
                     >
-                        Unstake
+                        Claim Reward
                     </Button>
                 </Flex>
             </Dialog.Content>
@@ -36,4 +35,4 @@ const UnstakeComponent = ({poolId}) => {
     );
 };
 
-export default UnstakeComponent;
+export default ClaimRewardComponent;

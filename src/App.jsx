@@ -3,7 +3,6 @@ import { configureWeb3Modal } from "./connection";
 import "@radix-ui/themes/styles.css";
 import Header from "./component/Header";
 import GetPoolByID from "./component/GetPoolByIDComponet"
-
 import {
     useWeb3ModalAccount,
     useWeb3ModalProvider,
@@ -12,8 +11,9 @@ import { isSupportedChain } from "./utils";
 import { getProvider } from "./constants/providers";
 import { getProposalsContract } from "./constants/contracts";
 import PoolsComponent from "./component/PoolsComponent";
+import useGetAllPools from "./hooks/useGetAllPools";
 import { Toaster } from 'react-hot-toast';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 configureWeb3Modal();
 
@@ -23,9 +23,15 @@ function App() {
     const [pools, setPools] = useState({data: []})
     const [poolId, setPoolId] = useState("");
 
+    const getAllPool = useGetAllPools()
+
+    useEffect(()=>{
+        if (!poolId){ setPools((prev) => ({...prev, data: [...getAllPool]}))}
+    }, [getAllPool, poolId])
+
     const displayPools= (pools)=>{
         return pools.map((data, index)=>{
-            return (<PoolsComponent key={index} pool={data} poolId={poolId} />)
+            return (<PoolsComponent key={index} pool={data} poolId={poolId||index} />)
         })
     }
 

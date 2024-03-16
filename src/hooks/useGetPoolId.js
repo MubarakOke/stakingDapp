@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { isSupportedChain } from "../utils";
 import { getProvider } from "../constants/providers";
 import { getStakingContract } from "../constants/contracts";
-import toast from 'react-hot-toast';
+
 import {
     useWeb3ModalAccount,
     useWeb3ModalProvider,
@@ -21,7 +21,7 @@ const useGetPoolId = () => {
         const contract = getStakingContract(signer);
 
         contract.id().then((res) => {
-            setPoolDetail(res)
+            setPoolId(res)
         })
         .catch((err) => {
             console.log(`error: ${err.reason}`)
@@ -30,7 +30,7 @@ const useGetPoolId = () => {
         
     }, []);
 
-    return poolDetail
+    return poolId
 };
 
 export default useGetPoolId;

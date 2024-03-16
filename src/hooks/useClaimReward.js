@@ -2,14 +2,14 @@ import { useCallback } from "react";
 import { isSupportedChain } from "../utils";
 import { getProvider } from "../constants/providers";
 import { ethers } from "ethers";
-import { getStakingContract, getERC20StakingContract } from "../constants/contracts";
+import { getStakingContract, getERC20RewardContract } from "../constants/contracts";
 import toast from 'react-hot-toast';
 import {
     useWeb3ModalAccount,
     useWeb3ModalProvider,
 } from "@web3modal/ethers/react";
 
-const useUnstake = (poolId) => {
+const useClaimReward = (poolId) => {
     const { chainId } = useWeb3ModalAccount();
     const { walletProvider } = useWeb3ModalProvider();
 
@@ -20,20 +20,20 @@ const useUnstake = (poolId) => {
 
         const contract = getStakingContract(signer);
 
-        let toastId= toast.loading('Unstaking...');
+        let toastId= toast.loading('Claiming Reward...');
         try {
-            const transaction = await contract.unstake(parseInt(poolId));
+            const transaction = await contract.claimReward(poolId);
             const receipt = await transaction.wait();
 
             toast.remove(toastId)
             if (receipt.status) {
-                toast.success(`Unstaking successful!`);
+                toast.success(`Reward Claim successful!`);
             }
         } catch (error) {
             toast.remove(toastId)
-            toast.error(`Unstaking failed! ${error.reason}`)
+            toast.error(`Reward Claim failed! ${error.reason}`)
         }
     }, [poolId, chainId, walletProvider]);
 };
 
-export default useUnstake;
+export default useClaimReward;
